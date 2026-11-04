@@ -3,21 +3,151 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日大宗商品与外汇监控 Dashboard - 初始化中</title>
+    <title>每日大宗商品与外汇监控 Dashboard</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #1e293b; padding: 40px; text-align: center; }
-        .box { background: #ffffff; max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        h1 { font-size: 20px; color: #1d4ed8; }
-        p { color: #64748b; line-height: 1.6; }
-        .loader { margin: 20px auto; width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #1d4ed8; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        :root {
+            --primary: #1d4ed8;
+            --primary-bg: #eff6ff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --highlight: #fef08a;
+            --highlight-text: #854d0e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+        }
+        .wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #ffffff;
+            padding: 24px 28px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+            border-left: 6px solid var(--primary);
+        }
+        h1 { margin: 0 0 10px 0; font-size: 22px; color: var(--text-main); }
+        .meta { color: var(--text-sub); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
+        .badge { background: var(--primary-bg); color: var(--primary); padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        
+        .section-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            margin-bottom: 28px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .card-title {
+            background: #f1f5f9;
+            padding: 14px 20px;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+        }
+        table.data-table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 13px;
+            text-align: center;
+        }
+        table.data-table th {
+            background-color: #1e40af;
+            color: #ffffff;
+            padding: 10px 14px;
+            white-space: nowrap;
+            font-weight: 600;
+            border: 1px solid #1e3a8a;
+        }
+        table.data-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        table.data-table tr:hover {
+            background-color: #f8fafc;
+        }
+        .highlight {
+            background-color: var(--highlight) !important;
+            color: var(--highlight-text) !important;
+            font-weight: 700;
+        }
+        .empty-tip {
+            padding: 24px;
+            color: #b91c1c;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div class="loader"></div>
-        <h1>监控看板已就绪</h1>
-        <p>GitHub Pages 已成功联通！正在等待第一个工作日早晨定时触发或手动触发 Actions 抓取最新数据。<br>一旦执行完成，此处将被完整的实时数据看板自动覆盖。</p>
+    <div class="wrapper">
+        <div class="header">
+            <h1>每日大宗商品与外汇监控 Dashboard</h1>
+            <div class="meta">
+                <span>基准抓取交易日：<strong class="badge">2026-11-03</strong></span>
+                <span>自动化流水线刷新时间：2026-11-04 02:38:16 (UTC+8)</span>
+            </div>
+        </div>
+
+        <!-- 1. 中国银行外汇牌价 -->
+        <div class="section-card">
+            <div class="card-title">
+                <span>1. 中国银行外汇牌价 (EUR / USD)</span>
+                <a href="https://www.boc.cn/sourcedb/whpj/" target="_blank" style="font-size:12px; color:#2563eb; text-decoration:none;">官方源直达 ↗</a>
+            </div>
+            <div class="table-container">
+                <div class="empty-tip">⚠️ 中国银行汇率抓取暂无响应</div>
+            </div>
+        </div>
+
+        <!-- 2. 上海期货交易所 铝 -->
+        <div class="section-card">
+            <div class="card-title">
+                <span>2. 上海期货交易所 - 铝交易数据 (含结算参考价高亮)</span>
+                <a href="https://www.shfe.com.cn/reports/tradedata/dailyandweeklydata/" target="_blank" style="font-size:12px; color:#2563eb; text-decoration:none;">官方源直达 ↗</a>
+            </div>
+            <div class="table-container">
+                <div class="empty-tip">⚠️ 上期所暂未返回当前日期铝数据或受网络波动拦截</div>
+            </div>
+        </div>
+
+        <!-- 3. 上海黄金交易所 Pt99.95 -->
+        <div class="section-card">
+            <div class="card-title">
+                <span>3. 上海黄金交易所 - Pt99.95 每日交易行情</span>
+                <a href="https://www.sge.com.cn/sjzx/quotation_daily_new" target="_blank" style="font-size:12px; color:#2563eb; text-decoration:none;">官方源直达 ↗</a>
+            </div>
+            <div class="table-container">
+                <div class="empty-tip">⚠️ 上金所 Pt99.95 行情抓取暂无响应</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Generated automatically by GitHub Actions Workflows • Daily Market Reporter
+        </div>
     </div>
 </body>
 </html>
