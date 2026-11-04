@@ -1,0 +1,38 @@
+name: Daily Market Dashboard Automation
+
+on:
+  schedule:
+    # 周一至周五 UTC 00:30 执行 (对应北京时间 08:30)
+    - cron: '30 0 * * 1-5'
+  workflow_dispatch: # 允许你在 GitHub 页面上手动点击按钮立即运行测试
+
+permissions:
+  contents: write
+
+jobs:
+  run-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python 运行环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 安装 Python 依赖
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 执行抓取并渲染 Dashboard
+        run: |
+          python scraper.py
+
+      - name: 提交更新后的看板并推送到仓库
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff-index --quiet HEAD || (git commit -m "chore(auto): refresh dashboard on $(date '+%Y-%m-%d %H:%M:%S')" && git push)
